@@ -7,21 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.franciscomanuelmatos.udemysb.domain.Category;
-import com.franciscomanuelmatos.udemysb.services.CategoryService;
+import com.franciscomanuelmatos.udemysb.domain.Product;
+import com.franciscomanuelmatos.udemysb.services.ProductService;
 
 @RestController
-@RequestMapping(value="/categories")
-public class CategoryResource {
+@RequestMapping(value="/products")
+public class ProductResource {
 	
 	@Autowired
-	private CategoryService service;
+	private ProductService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> getCategory(@PathVariable Integer id) {
-		Category obj = service.find(id);
-		
+	public ResponseEntity<?> getProduct(@PathVariable Integer id) {
+		Product obj = service.find(id);
 		return ResponseEntity.ok(obj);
 	}
-	
 }
