@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.franciscomanuelmatos.udemysb.domain.Category;
 import com.franciscomanuelmatos.udemysb.repositories.CategoryRepository;
+import com.franciscomanuelmatos.udemysb.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -16,8 +17,7 @@ public class CategoryService {
 	
 	public Category find(Integer id) {
 		Optional<Category> obj = repo.findById(id);
-		return obj.orElse(null);
-		//return obj.orElseThrow(() -> new ObjectNotFoundException(
-		//		"Object not found! Id: " + id + ", Tipo: " + Category.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Object not found! Id: " + id + ", Tipo: " + Category.class.getName()));
 	}
 }

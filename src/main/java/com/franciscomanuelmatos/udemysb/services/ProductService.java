@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.franciscomanuelmatos.udemysb.domain.Product;
 import com.franciscomanuelmatos.udemysb.repositories.ProductRepository;
+import com.franciscomanuelmatos.udemysb.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ProductService {
@@ -15,6 +16,7 @@ public class ProductService {
 	
 	public Product find(Integer id) {
 		Optional<Product> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Object not found! Id: " + id + ", Nome: " + Product.class.getName()));
 	}
 }
