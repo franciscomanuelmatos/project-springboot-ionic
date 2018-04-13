@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.franciscomanuelmatos.udemysb.domain.Address;
 import com.franciscomanuelmatos.udemysb.domain.Category;
 import com.franciscomanuelmatos.udemysb.domain.City;
+import com.franciscomanuelmatos.udemysb.domain.Client;
 import com.franciscomanuelmatos.udemysb.domain.Product;
 import com.franciscomanuelmatos.udemysb.domain.State;
+import com.franciscomanuelmatos.udemysb.domain.enums.ClientType;
+import com.franciscomanuelmatos.udemysb.repositories.AddressRepository;
 import com.franciscomanuelmatos.udemysb.repositories.CategoryRepository;
 import com.franciscomanuelmatos.udemysb.repositories.CityRepository;
+import com.franciscomanuelmatos.udemysb.repositories.ClientRepository;
 import com.franciscomanuelmatos.udemysb.repositories.ProductRepository;
 import com.franciscomanuelmatos.udemysb.repositories.StateRepository;
 
@@ -30,6 +35,12 @@ public class UdemysbApplication implements CommandLineRunner {
 	
 	@Autowired
 	private StateRepository stateRepo;
+	
+	@Autowired
+	private ClientRepository clientRepo;
+	
+	@Autowired
+	private AddressRepository addressRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(UdemysbApplication.class, args);
@@ -61,9 +72,19 @@ public class UdemysbApplication implements CommandLineRunner {
 		s1.getCities().addAll(Arrays.asList(c1));
 		s2.getCities().addAll(Arrays.asList(c2, c3));
 		
+		Client cl1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.PHYSICALPERSON);
+		cl1.getTelephones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Address a1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cl1, c1);
+		Address a2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cl1, c2);
+		
+		cl1.getAddresses().addAll(Arrays.asList(a1, a2));
+		
 		categoryRepo.saveAll(Arrays.asList(cat1, cat2));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 		stateRepo.saveAll(Arrays.asList(s1, s2));
 		cityRepo.saveAll(Arrays.asList(c1, c2, c3));
+		clientRepo.saveAll(Arrays.asList(cl1));
+		addressRepo.saveAll(Arrays.asList(a1, a2));
 	}
 }
